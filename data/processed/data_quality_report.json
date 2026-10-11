@@ -1,0 +1,742 @@
+{
+  "generated_at": "2026-10-05T13:43:04.324164",
+  "total_customers": 120,
+  "total_policies": 140,
+  "total_claims": 220,
+  "total_payments": 1013,
+  "claims_outside_policy_dates_count": 135,
+  "claims_exceeding_sum_insured_count": 7,
+  "missing_joins_count": 0,
+  "unexpected_statuses_count": 0,
+  "claims_outside_policy_dates": [
+    {
+      "claim_id": "CL7001",
+      "policy_id": "POL3120",
+      "reason": "ClaimDate (2024-06-07) precedes PolicyStartDate (2024-06-13)"
+    },
+    {
+      "claim_id": "CL7002",
+      "policy_id": "POL3038",
+      "reason": "ClaimDate (2024-05-07) exceeds PolicyEndDate (2024-03-16)"
+    },
+    {
+      "claim_id": "CL7003",
+      "policy_id": "POL3027",
+      "reason": "ClaimDate (2022-12-19) precedes PolicyStartDate (2024-06-12)"
+    },
+    {
+      "claim_id": "CL7004",
+      "policy_id": "POL3002",
+      "reason": "ClaimDate (2025-09-03) exceeds PolicyEndDate (2024-06-29)"
+    },
+    {
+      "claim_id": "CL7006",
+      "policy_id": "POL3116",
+      "reason": "ClaimDate (2023-05-22) precedes PolicyStartDate (2024-04-02)"
+    },
+    {
+      "claim_id": "CL7007",
+      "policy_id": "POL3001",
+      "reason": "ClaimDate (2023-05-25) precedes PolicyStartDate (2023-11-01)"
+    },
+    {
+      "claim_id": "CL7009",
+      "policy_id": "POL3130",
+      "reason": "ClaimDate (2022-10-30) precedes PolicyStartDate (2024-11-08)"
+    },
+    {
+      "claim_id": "CL7010",
+      "policy_id": "POL3093",
+      "reason": "ClaimDate (2024-05-25) precedes PolicyStartDate (2024-11-07)"
+    },
+    {
+      "claim_id": "CL7012",
+      "policy_id": "POL3001",
+      "reason": "ClaimDate (2025-01-27) exceeds PolicyEndDate (2024-10-26)"
+    },
+    {
+      "claim_id": "CL7014",
+      "policy_id": "POL3011",
+      "reason": "ClaimDate (2024-06-29) precedes PolicyStartDate (2024-07-23)"
+    },
+    {
+      "claim_id": "CL7015",
+      "policy_id": "POL3064",
+      "reason": "ClaimDate (2025-06-21) exceeds PolicyEndDate (2025-03-23)"
+    },
+    {
+      "claim_id": "CL7018",
+      "policy_id": "POL3100",
+      "reason": "ClaimDate (2022-02-01) precedes PolicyStartDate (2023-09-04)"
+    },
+    {
+      "claim_id": "CL7019",
+      "policy_id": "POL3061",
+      "reason": "ClaimDate (2023-10-22) precedes PolicyStartDate (2024-04-27)"
+    },
+    {
+      "claim_id": "CL7022",
+      "policy_id": "POL3022",
+      "reason": "ClaimDate (2023-04-18) precedes PolicyStartDate (2024-10-25)"
+    },
+    {
+      "claim_id": "CL7026",
+      "policy_id": "POL3106",
+      "reason": "ClaimDate (2025-01-28) exceeds PolicyEndDate (2024-08-14)"
+    },
+    {
+      "claim_id": "CL7028",
+      "policy_id": "POL3118",
+      "reason": "ClaimDate (2023-11-29) exceeds PolicyEndDate (2023-01-14)"
+    },
+    {
+      "claim_id": "CL7034",
+      "policy_id": "POL3031",
+      "reason": "ClaimDate (2023-07-14) exceeds PolicyEndDate (2023-06-28)"
+    },
+    {
+      "claim_id": "CL7037",
+      "policy_id": "POL3062",
+      "reason": "ClaimDate (2024-03-14) exceeds PolicyEndDate (2023-05-03)"
+    },
+    {
+      "claim_id": "CL7039",
+      "policy_id": "POL3103",
+      "reason": "ClaimDate (2023-03-24) precedes PolicyStartDate (2024-07-16)"
+    },
+    {
+      "claim_id": "CL7040",
+      "policy_id": "POL3074",
+      "reason": "ClaimDate (2024-10-28) exceeds PolicyEndDate (2024-10-24)"
+    },
+    {
+      "claim_id": "CL7041",
+      "policy_id": "POL3047",
+      "reason": "ClaimDate (2023-01-18) precedes PolicyStartDate (2023-05-22)"
+    },
+    {
+      "claim_id": "CL7042",
+      "policy_id": "POL3056",
+      "reason": "ClaimDate (2022-12-28) precedes PolicyStartDate (2023-10-05)"
+    },
+    {
+      "claim_id": "CL7043",
+      "policy_id": "POL3117",
+      "reason": "ClaimDate (2024-05-31) exceeds PolicyEndDate (2023-03-23)"
+    },
+    {
+      "claim_id": "CL7045",
+      "policy_id": "POL3123",
+      "reason": "ClaimDate (2022-01-27) precedes PolicyStartDate (2022-11-24)"
+    },
+    {
+      "claim_id": "CL7047",
+      "policy_id": "POL3006",
+      "reason": "ClaimDate (2022-05-01) precedes PolicyStartDate (2024-07-20)"
+    },
+    {
+      "claim_id": "CL7048",
+      "policy_id": "POL3055",
+      "reason": "ClaimDate (2023-04-30) exceeds PolicyEndDate (2023-01-23)"
+    },
+    {
+      "claim_id": "CL7049",
+      "policy_id": "POL3064",
+      "reason": "ClaimDate (2025-09-10) exceeds PolicyEndDate (2025-03-23)"
+    },
+    {
+      "claim_id": "CL7051",
+      "policy_id": "POL3018",
+      "reason": "ClaimDate (2023-05-06) precedes PolicyStartDate (2024-05-07)"
+    },
+    {
+      "claim_id": "CL7054",
+      "policy_id": "POL3048",
+      "reason": "ClaimDate (2022-01-18) precedes PolicyStartDate (2024-03-13)"
+    },
+    {
+      "claim_id": "CL7056",
+      "policy_id": "POL3037",
+      "reason": "ClaimDate (2022-02-21) precedes PolicyStartDate (2024-07-21)"
+    },
+    {
+      "claim_id": "CL7057",
+      "policy_id": "POL3063",
+      "reason": "ClaimDate (2022-06-03) precedes PolicyStartDate (2023-04-14)"
+    },
+    {
+      "claim_id": "CL7059",
+      "policy_id": "POL3135",
+      "reason": "ClaimDate (2023-08-13) precedes PolicyStartDate (2024-08-01)"
+    },
+    {
+      "claim_id": "CL7060",
+      "policy_id": "POL3115",
+      "reason": "ClaimDate (2024-03-28) precedes PolicyStartDate (2024-07-09)"
+    },
+    {
+      "claim_id": "CL7062",
+      "policy_id": "POL3030",
+      "reason": "ClaimDate (2023-03-21) precedes PolicyStartDate (2024-05-17)"
+    },
+    {
+      "claim_id": "CL7067",
+      "policy_id": "POL3119",
+      "reason": "ClaimDate (2025-07-30) exceeds PolicyEndDate (2023-10-15)"
+    },
+    {
+      "claim_id": "CL7068",
+      "policy_id": "POL3087",
+      "reason": "ClaimDate (2025-02-26) exceeds PolicyEndDate (2024-06-08)"
+    },
+    {
+      "claim_id": "CL7069",
+      "policy_id": "POL3066",
+      "reason": "ClaimDate (2025-06-30) exceeds PolicyEndDate (2024-12-01)"
+    },
+    {
+      "claim_id": "CL7070",
+      "policy_id": "POL3074",
+      "reason": "ClaimDate (2025-08-07) exceeds PolicyEndDate (2024-10-24)"
+    },
+    {
+      "claim_id": "CL7072",
+      "policy_id": "POL3003",
+      "reason": "ClaimDate (2023-05-14) precedes PolicyStartDate (2023-05-26)"
+    },
+    {
+      "claim_id": "CL7073",
+      "policy_id": "POL3106",
+      "reason": "ClaimDate (2024-12-26) exceeds PolicyEndDate (2024-08-14)"
+    },
+    {
+      "claim_id": "CL7075",
+      "policy_id": "POL3049",
+      "reason": "ClaimDate (2023-03-10) precedes PolicyStartDate (2023-08-28)"
+    },
+    {
+      "claim_id": "CL7077",
+      "policy_id": "POL3058",
+      "reason": "ClaimDate (2022-02-09) precedes PolicyStartDate (2022-08-07)"
+    },
+    {
+      "claim_id": "CL7078",
+      "policy_id": "POL3124",
+      "reason": "ClaimDate (2024-09-29) exceeds PolicyEndDate (2023-02-15)"
+    },
+    {
+      "claim_id": "CL7080",
+      "policy_id": "POL3121",
+      "reason": "ClaimDate (2024-06-07) exceeds PolicyEndDate (2024-02-17)"
+    },
+    {
+      "claim_id": "CL7081",
+      "policy_id": "POL3124",
+      "reason": "ClaimDate (2023-06-09) exceeds PolicyEndDate (2023-02-15)"
+    },
+    {
+      "claim_id": "CL7083",
+      "policy_id": "POL3123",
+      "reason": "ClaimDate (2022-04-05) precedes PolicyStartDate (2022-11-24)"
+    },
+    {
+      "claim_id": "CL7084",
+      "policy_id": "POL3100",
+      "reason": "ClaimDate (2024-11-30) exceeds PolicyEndDate (2024-08-29)"
+    },
+    {
+      "claim_id": "CL7085",
+      "policy_id": "POL3034",
+      "reason": "ClaimDate (2025-08-07) exceeds PolicyEndDate (2025-04-29)"
+    },
+    {
+      "claim_id": "CL7086",
+      "policy_id": "POL3086",
+      "reason": "ClaimDate (2022-04-29) precedes PolicyStartDate (2024-02-22)"
+    },
+    {
+      "claim_id": "CL7087",
+      "policy_id": "POL3133",
+      "reason": "ClaimDate (2022-05-31) precedes PolicyStartDate (2022-06-03)"
+    },
+    {
+      "claim_id": "CL7090",
+      "policy_id": "POL3028",
+      "reason": "ClaimDate (2023-07-15) exceeds PolicyEndDate (2023-01-01)"
+    },
+    {
+      "claim_id": "CL7091",
+      "policy_id": "POL3076",
+      "reason": "ClaimDate (2022-08-15) precedes PolicyStartDate (2023-10-22)"
+    },
+    {
+      "claim_id": "CL7092",
+      "policy_id": "POL3058",
+      "reason": "ClaimDate (2022-05-28) precedes PolicyStartDate (2022-08-07)"
+    },
+    {
+      "claim_id": "CL7095",
+      "policy_id": "POL3021",
+      "reason": "ClaimDate (2025-09-26) exceeds PolicyEndDate (2025-02-16)"
+    },
+    {
+      "claim_id": "CL7096",
+      "policy_id": "POL3067",
+      "reason": "ClaimDate (2022-09-10) precedes PolicyStartDate (2023-03-24)"
+    },
+    {
+      "claim_id": "CL7097",
+      "policy_id": "POL3068",
+      "reason": "ClaimDate (2023-03-24) precedes PolicyStartDate (2024-11-19)"
+    },
+    {
+      "claim_id": "CL7098",
+      "policy_id": "POL3048",
+      "reason": "ClaimDate (2022-01-07) precedes PolicyStartDate (2024-03-13)"
+    },
+    {
+      "claim_id": "CL7099",
+      "policy_id": "POL3108",
+      "reason": "ClaimDate (2022-03-18) precedes PolicyStartDate (2022-03-24)"
+    },
+    {
+      "claim_id": "CL7100",
+      "policy_id": "POL3085",
+      "reason": "ClaimDate (2023-07-08) precedes PolicyStartDate (2024-05-17)"
+    },
+    {
+      "claim_id": "CL7101",
+      "policy_id": "POL3052",
+      "reason": "ClaimDate (2022-03-29) precedes PolicyStartDate (2023-07-16)"
+    },
+    {
+      "claim_id": "CL7102",
+      "policy_id": "POL3122",
+      "reason": "ClaimDate (2024-02-15) precedes PolicyStartDate (2024-04-08)"
+    },
+    {
+      "claim_id": "CL7103",
+      "policy_id": "POL3086",
+      "reason": "ClaimDate (2025-07-24) exceeds PolicyEndDate (2025-02-16)"
+    },
+    {
+      "claim_id": "CL7104",
+      "policy_id": "POL3130",
+      "reason": "ClaimDate (2024-08-26) precedes PolicyStartDate (2024-11-08)"
+    },
+    {
+      "claim_id": "CL7106",
+      "policy_id": "POL3097",
+      "reason": "ClaimDate (2022-01-10) precedes PolicyStartDate (2023-11-13)"
+    },
+    {
+      "claim_id": "CL7108",
+      "policy_id": "POL3050",
+      "reason": "ClaimDate (2025-08-27) exceeds PolicyEndDate (2025-06-28)"
+    },
+    {
+      "claim_id": "CL7109",
+      "policy_id": "POL3084",
+      "reason": "ClaimDate (2022-07-09) precedes PolicyStartDate (2023-05-10)"
+    },
+    {
+      "claim_id": "CL7110",
+      "policy_id": "POL3126",
+      "reason": "ClaimDate (2022-05-27) precedes PolicyStartDate (2023-03-02)"
+    },
+    {
+      "claim_id": "CL7113",
+      "policy_id": "POL3138",
+      "reason": "ClaimDate (2022-07-07) precedes PolicyStartDate (2022-12-19)"
+    },
+    {
+      "claim_id": "CL7114",
+      "policy_id": "POL3102",
+      "reason": "ClaimDate (2025-05-09) exceeds PolicyEndDate (2023-12-08)"
+    },
+    {
+      "claim_id": "CL7115",
+      "policy_id": "POL3067",
+      "reason": "ClaimDate (2023-02-09) precedes PolicyStartDate (2023-03-24)"
+    },
+    {
+      "claim_id": "CL7117",
+      "policy_id": "POL3091",
+      "reason": "ClaimDate (2024-03-30) exceeds PolicyEndDate (2023-03-01)"
+    },
+    {
+      "claim_id": "CL7118",
+      "policy_id": "POL3023",
+      "reason": "ClaimDate (2022-09-03) precedes PolicyStartDate (2024-11-09)"
+    },
+    {
+      "claim_id": "CL7119",
+      "policy_id": "POL3124",
+      "reason": "ClaimDate (2024-10-10) exceeds PolicyEndDate (2023-02-15)"
+    },
+    {
+      "claim_id": "CL7120",
+      "policy_id": "POL3110",
+      "reason": "ClaimDate (2022-05-04) precedes PolicyStartDate (2023-11-26)"
+    },
+    {
+      "claim_id": "CL7122",
+      "policy_id": "POL3138",
+      "reason": "ClaimDate (2022-02-12) precedes PolicyStartDate (2022-12-19)"
+    },
+    {
+      "claim_id": "CL7123",
+      "policy_id": "POL3016",
+      "reason": "ClaimDate (2023-04-08) precedes PolicyStartDate (2023-04-30)"
+    },
+    {
+      "claim_id": "CL7124",
+      "policy_id": "POL3098",
+      "reason": "ClaimDate (2023-01-17) precedes PolicyStartDate (2023-05-14)"
+    },
+    {
+      "claim_id": "CL7125",
+      "policy_id": "POL3081",
+      "reason": "ClaimDate (2022-02-17) precedes PolicyStartDate (2024-01-28)"
+    },
+    {
+      "claim_id": "CL7126",
+      "policy_id": "POL3103",
+      "reason": "ClaimDate (2024-04-18) precedes PolicyStartDate (2024-07-16)"
+    },
+    {
+      "claim_id": "CL7127",
+      "policy_id": "POL3018",
+      "reason": "ClaimDate (2022-09-30) precedes PolicyStartDate (2024-05-07)"
+    },
+    {
+      "claim_id": "CL7129",
+      "policy_id": "POL3007",
+      "reason": "ClaimDate (2022-07-03) precedes PolicyStartDate (2024-07-25)"
+    },
+    {
+      "claim_id": "CL7130",
+      "policy_id": "POL3027",
+      "reason": "ClaimDate (2022-04-26) precedes PolicyStartDate (2024-06-12)"
+    },
+    {
+      "claim_id": "CL7131",
+      "policy_id": "POL3004",
+      "reason": "ClaimDate (2022-04-26) precedes PolicyStartDate (2023-04-11)"
+    },
+    {
+      "claim_id": "CL7132",
+      "policy_id": "POL3100",
+      "reason": "ClaimDate (2025-08-14) exceeds PolicyEndDate (2024-08-29)"
+    },
+    {
+      "claim_id": "CL7133",
+      "policy_id": "POL3117",
+      "reason": "ClaimDate (2024-07-28) exceeds PolicyEndDate (2023-03-23)"
+    },
+    {
+      "claim_id": "CL7134",
+      "policy_id": "POL3063",
+      "reason": "ClaimDate (2025-08-24) exceeds PolicyEndDate (2024-04-08)"
+    },
+    {
+      "claim_id": "CL7135",
+      "policy_id": "POL3090",
+      "reason": "ClaimDate (2025-01-12) exceeds PolicyEndDate (2023-08-30)"
+    },
+    {
+      "claim_id": "CL7136",
+      "policy_id": "POL3116",
+      "reason": "ClaimDate (2023-07-03) precedes PolicyStartDate (2024-04-02)"
+    },
+    {
+      "claim_id": "CL7138",
+      "policy_id": "POL3010",
+      "reason": "ClaimDate (2022-04-16) precedes PolicyStartDate (2024-06-08)"
+    },
+    {
+      "claim_id": "CL7139",
+      "policy_id": "POL3053",
+      "reason": "ClaimDate (2023-09-21) exceeds PolicyEndDate (2023-05-24)"
+    },
+    {
+      "claim_id": "CL7140",
+      "policy_id": "POL3046",
+      "reason": "ClaimDate (2025-04-04) exceeds PolicyEndDate (2024-08-10)"
+    },
+    {
+      "claim_id": "CL7142",
+      "policy_id": "POL3138",
+      "reason": "ClaimDate (2022-01-25) precedes PolicyStartDate (2022-12-19)"
+    },
+    {
+      "claim_id": "CL7144",
+      "policy_id": "POL3019",
+      "reason": "ClaimDate (2024-09-01) exceeds PolicyEndDate (2023-06-12)"
+    },
+    {
+      "claim_id": "CL7146",
+      "policy_id": "POL3011",
+      "reason": "ClaimDate (2023-12-03) precedes PolicyStartDate (2024-07-23)"
+    },
+    {
+      "claim_id": "CL7147",
+      "policy_id": "POL3069",
+      "reason": "ClaimDate (2023-06-17) precedes PolicyStartDate (2023-10-04)"
+    },
+    {
+      "claim_id": "CL7148",
+      "policy_id": "POL3016",
+      "reason": "ClaimDate (2022-07-30) precedes PolicyStartDate (2023-04-30)"
+    },
+    {
+      "claim_id": "CL7150",
+      "policy_id": "POL3047",
+      "reason": "ClaimDate (2022-01-26) precedes PolicyStartDate (2023-05-22)"
+    },
+    {
+      "claim_id": "CL7151",
+      "policy_id": "POL3107",
+      "reason": "ClaimDate (2023-05-19) precedes PolicyStartDate (2024-10-03)"
+    },
+    {
+      "claim_id": "CL7154",
+      "policy_id": "POL3069",
+      "reason": "ClaimDate (2022-08-17) precedes PolicyStartDate (2023-10-04)"
+    },
+    {
+      "claim_id": "CL7157",
+      "policy_id": "POL3081",
+      "reason": "ClaimDate (2024-01-18) precedes PolicyStartDate (2024-01-28)"
+    },
+    {
+      "claim_id": "CL7162",
+      "policy_id": "POL3047",
+      "reason": "ClaimDate (2022-11-27) precedes PolicyStartDate (2023-05-22)"
+    },
+    {
+      "claim_id": "CL7163",
+      "policy_id": "POL3072",
+      "reason": "ClaimDate (2022-01-29) precedes PolicyStartDate (2024-06-21)"
+    },
+    {
+      "claim_id": "CL7164",
+      "policy_id": "POL3071",
+      "reason": "ClaimDate (2023-04-10) precedes PolicyStartDate (2024-08-28)"
+    },
+    {
+      "claim_id": "CL7167",
+      "policy_id": "POL3080",
+      "reason": "ClaimDate (2023-07-04) precedes PolicyStartDate (2024-03-03)"
+    },
+    {
+      "claim_id": "CL7170",
+      "policy_id": "POL3071",
+      "reason": "ClaimDate (2023-05-19) precedes PolicyStartDate (2024-08-28)"
+    },
+    {
+      "claim_id": "CL7171",
+      "policy_id": "POL3062",
+      "reason": "ClaimDate (2022-01-20) precedes PolicyStartDate (2022-05-08)"
+    },
+    {
+      "claim_id": "CL7173",
+      "policy_id": "POL3066",
+      "reason": "ClaimDate (2025-08-09) exceeds PolicyEndDate (2024-12-01)"
+    },
+    {
+      "claim_id": "CL7174",
+      "policy_id": "POL3068",
+      "reason": "ClaimDate (2022-12-25) precedes PolicyStartDate (2024-11-19)"
+    },
+    {
+      "claim_id": "CL7176",
+      "policy_id": "POL3030",
+      "reason": "ClaimDate (2024-05-06) precedes PolicyStartDate (2024-05-17)"
+    },
+    {
+      "claim_id": "CL7177",
+      "policy_id": "POL3113",
+      "reason": "ClaimDate (2024-11-28) exceeds PolicyEndDate (2024-03-03)"
+    },
+    {
+      "claim_id": "CL7181",
+      "policy_id": "POL3053",
+      "reason": "ClaimDate (2025-07-19) exceeds PolicyEndDate (2023-05-24)"
+    },
+    {
+      "claim_id": "CL7182",
+      "policy_id": "POL3137",
+      "reason": "ClaimDate (2022-05-24) precedes PolicyStartDate (2022-12-28)"
+    },
+    {
+      "claim_id": "CL7188",
+      "policy_id": "POL3029",
+      "reason": "ClaimDate (2023-04-27) precedes PolicyStartDate (2024-06-01)"
+    },
+    {
+      "claim_id": "CL7189",
+      "policy_id": "POL3056",
+      "reason": "ClaimDate (2023-04-20) precedes PolicyStartDate (2023-10-05)"
+    },
+    {
+      "claim_id": "CL7190",
+      "policy_id": "POL3046",
+      "reason": "ClaimDate (2022-11-24) precedes PolicyStartDate (2023-08-16)"
+    },
+    {
+      "claim_id": "CL7191",
+      "policy_id": "POL3018",
+      "reason": "ClaimDate (2022-02-14) precedes PolicyStartDate (2024-05-07)"
+    },
+    {
+      "claim_id": "CL7192",
+      "policy_id": "POL3113",
+      "reason": "ClaimDate (2025-05-02) exceeds PolicyEndDate (2024-03-03)"
+    },
+    {
+      "claim_id": "CL7194",
+      "policy_id": "POL3025",
+      "reason": "ClaimDate (2022-02-24) precedes PolicyStartDate (2022-05-29)"
+    },
+    {
+      "claim_id": "CL7196",
+      "policy_id": "POL3070",
+      "reason": "ClaimDate (2022-06-25) precedes PolicyStartDate (2024-01-29)"
+    },
+    {
+      "claim_id": "CL7197",
+      "policy_id": "POL3029",
+      "reason": "ClaimDate (2023-08-07) precedes PolicyStartDate (2024-06-01)"
+    },
+    {
+      "claim_id": "CL7198",
+      "policy_id": "POL3134",
+      "reason": "ClaimDate (2022-09-14) precedes PolicyStartDate (2022-12-10)"
+    },
+    {
+      "claim_id": "CL7199",
+      "policy_id": "POL3066",
+      "reason": "ClaimDate (2025-02-03) exceeds PolicyEndDate (2024-12-01)"
+    },
+    {
+      "claim_id": "CL7202",
+      "policy_id": "POL3024",
+      "reason": "ClaimDate (2022-07-19) precedes PolicyStartDate (2023-10-05)"
+    },
+    {
+      "claim_id": "CL7203",
+      "policy_id": "POL3036",
+      "reason": "ClaimDate (2023-11-28) precedes PolicyStartDate (2024-11-03)"
+    },
+    {
+      "claim_id": "CL7204",
+      "policy_id": "POL3000",
+      "reason": "ClaimDate (2022-08-22) precedes PolicyStartDate (2024-09-13)"
+    },
+    {
+      "claim_id": "CL7205",
+      "policy_id": "POL3036",
+      "reason": "ClaimDate (2023-11-30) precedes PolicyStartDate (2024-11-03)"
+    },
+    {
+      "claim_id": "CL7207",
+      "policy_id": "POL3132",
+      "reason": "ClaimDate (2023-07-31) exceeds PolicyEndDate (2023-01-15)"
+    },
+    {
+      "claim_id": "CL7209",
+      "policy_id": "POL3126",
+      "reason": "ClaimDate (2025-08-17) exceeds PolicyEndDate (2025-02-19)"
+    },
+    {
+      "claim_id": "CL7210",
+      "policy_id": "POL3000",
+      "reason": "ClaimDate (2022-02-06) precedes PolicyStartDate (2024-09-13)"
+    },
+    {
+      "claim_id": "CL7212",
+      "policy_id": "POL3103",
+      "reason": "ClaimDate (2024-07-01) precedes PolicyStartDate (2024-07-16)"
+    },
+    {
+      "claim_id": "CL7213",
+      "policy_id": "POL3022",
+      "reason": "ClaimDate (2022-06-05) precedes PolicyStartDate (2024-10-25)"
+    },
+    {
+      "claim_id": "CL7214",
+      "policy_id": "POL3008",
+      "reason": "ClaimDate (2022-10-18) precedes PolicyStartDate (2023-10-25)"
+    },
+    {
+      "claim_id": "CL7215",
+      "policy_id": "POL3033",
+      "reason": "ClaimDate (2024-09-12) exceeds PolicyEndDate (2024-03-17)"
+    },
+    {
+      "claim_id": "CL7218",
+      "policy_id": "POL3101",
+      "reason": "ClaimDate (2025-07-13) exceeds PolicyEndDate (2025-05-21)"
+    },
+    {
+      "claim_id": "CL7219",
+      "policy_id": "POL3074",
+      "reason": "ClaimDate (2025-07-01) exceeds PolicyEndDate (2024-10-24)"
+    }
+  ],
+  "claims_exceeding_sum_insured": [
+    {
+      "claim_id": "CL7011",
+      "policy_id": "POL3039",
+      "claim_amount": 120994.56,
+      "sum_insured": 100000.0,
+      "excess": 20994.56
+    },
+    {
+      "claim_id": "CL7014",
+      "policy_id": "POL3011",
+      "claim_amount": 148645.69,
+      "sum_insured": 100000.0,
+      "excess": 48645.69
+    },
+    {
+      "claim_id": "CL7099",
+      "policy_id": "POL3108",
+      "claim_amount": 132015.11,
+      "sum_insured": 100000.0,
+      "excess": 32015.11
+    },
+    {
+      "claim_id": "CL7107",
+      "policy_id": "POL3108",
+      "claim_amount": 113979.9,
+      "sum_insured": 100000.0,
+      "excess": 13979.9
+    },
+    {
+      "claim_id": "CL7110",
+      "policy_id": "POL3126",
+      "claim_amount": 264729.91,
+      "sum_insured": 200000.0,
+      "excess": 64729.91
+    },
+    {
+      "claim_id": "CL7118",
+      "policy_id": "POL3023",
+      "claim_amount": 152901.69,
+      "sum_insured": 100000.0,
+      "excess": 52901.69
+    },
+    {
+      "claim_id": "CL7133",
+      "policy_id": "POL3117",
+      "claim_amount": 170642.27,
+      "sum_insured": 100000.0,
+      "excess": 70642.27
+    }
+  ],
+  "missing_joins": [],
+  "unexpected_statuses": [],
+  "summary": "Audited 220 claims across 140 policies. Flagged 135 claims with dates outside policy term and 7 claims with amount exceeding sum insured. Zero missing relational joins detected."
+}

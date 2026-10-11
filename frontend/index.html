@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniRisk - Insurance Automated Risk Profile Summarizer</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-icon">🛡️</div>
+        <div>
+          <h1>OmniRisk</h1>
+          <p class="tagline">Automated Insurance Underwriting Risk Profile Summarizer</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <span class="badge badge-accent">Single-Agent System</span>
+        <span class="badge badge-model" id="headerModelBadge">Model: gemini-3.5-flash</span>
+        <span class="badge" id="headerModeBadge">Execution: INITIALIZING</span>
+        <a href="/docs" target="_blank" class="nav-link">API Docs</a>
+      </div>
+    </header>
+
+    <!-- Nav Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-analyzer')">Risk Analyzer</button>
+      <button class="tab-btn" onclick="switchTab('tab-explorer')">JSON Explorer</button>
+      <button class="tab-btn" onclick="switchTab('tab-portfolio')">Portfolio View (120)</button>
+      <button class="tab-btn" onclick="switchTab('tab-dq')">Data Quality & Relevance</button>
+      <button class="tab-btn" onclick="switchTab('tab-evaluation')">Benchmark & ML Challengers</button>
+      <button class="tab-btn" onclick="switchTab('tab-governance')">AI Governance</button>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- TAB 1: ANALYZER -->
+    <!-- ============================================================ -->
+    <main id="tab-analyzer" class="tab-content active">
+      <!-- Controls Card -->
+      <section class="card controls-card">
+        <div class="controls-header">
+          <h2>Select Underwriting Profile</h2>
+          <span class="privacy-notice">🔒 Privacy Preserved: PII excluded. Age band derived before DOB removal. Synthetic dataset.</span>
+        </div>
+
+        <!-- Quick Demo Profiles -->
+        <div class="demo-buttons-group">
+          <label class="group-label">Quick Demo Profiles (From Source Dataset):</label>
+          <div class="demo-buttons">
+            <button class="demo-btn low" onclick="selectDemo('CUST1005')">
+              <span class="demo-tag">LOW RISK</span>
+              <strong>CUST1005</strong>
+              <small>0 Claims · Active Homeowners</small>
+            </button>
+            <button class="demo-btn medium" onclick="selectDemo('CUST1025')">
+              <span class="demo-tag">MEDIUM RISK</span>
+              <strong>CUST1025</strong>
+              <small>3 Claims · Loss Ratio 5.5</small>
+            </button>
+            <button class="demo-btn high" onclick="selectDemo('CUST1003')">
+              <span class="demo-tag">HIGH RISK</span>
+              <strong>CUST1003</strong>
+              <small>7 Claims · Critical Severity</small>
+            </button>
+          </div>
+        </div>
+
+        <div class="selector-row">
+          <div class="input-col">
+            <label for="customerSelect">Or Select Customer ID:</label>
+            <div class="select-wrapper">
+              <select id="customerSelect" onchange="onSelectChange()">
+                <option value="">Loading customers...</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-col-btn">
+            <button id="analyzeBtn" class="btn btn-primary" onclick="runAnalysis()">
+              <span>⚡ Analyze Risk</span>
+            </button>
+            <button class="btn btn-secondary" onclick="toggleCustomJson()">
+              <span>📝 Custom JSON</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom JSON Drawer -->
+        <div id="customJsonContainer" class="custom-json-drawer hidden">
+          <div class="drawer-header">
+            <label>Input Custom Normalized Risk JSON (Sanitized):</label>
+            <button class="btn-text" onclick="loadSampleJson()">Load Sample</button>
+          </div>
+          <textarea id="customJsonInput" rows="6" placeholder='{"customer_id": "CUSTOM_01", "policies": [...], "claims": [...], "payments": [...]}'></textarea>
+          <button class="btn btn-sm btn-primary" onclick="runCustomJsonAnalysis()">Analyze Custom JSON</button>
+        </div>
+      </section>
+
+      <!-- Loading State -->
+      <div id="loadingIndicator" class="loading-state hidden">
+        <div class="spinner"></div>
+        <p>Consolidating fragmented data, computing risk indicators, and synthesizing brief...</p>
+      </div>
+
+      <!-- Results View -->
+      <section id="resultsSection" class="results-grid hidden">
+        <!-- PRIMARY VISUAL ELEMENT: Hero Score & KPI Bar -->
+        <div class="hero-kpi-bar">
+          <!-- Score Gauge Card -->
+          <div class="kpi-card score-card" id="scoreCard">
+            <div class="score-display">
+              <div class="score-num" id="riskScore">--</div>
+              <div class="score-max">/ 100</div>
+            </div>
+            <div class="risk-badge" id="riskLevelBadge">--</div>
+            <div class="score-subtext">Authoritative Deterministic Score</div>
+          </div>
+
+          <!-- Customer Identity Card -->
+          <div class="kpi-card customer-card">
+            <div class="card-title-sm">Profile Context</div>
+            <div class="kpi-val" id="displayCustomerId">--</div>
+            <div class="kpi-details" id="customerLocation">--</div>
+            <div class="kpi-tags" id="policyStatusTags"></div>
+          </div>
+
+          <!-- Financial Snapshot -->
+          <div class="kpi-card financial-card">
+            <div class="card-title-sm">Financial Exposure</div>
+            <div class="kpi-stat-row">
+              <span>Loss Ratio:</span>
+              <strong id="displayLossRatio">--</strong>
+            </div>
+            <div class="kpi-stat-row">
+              <span>Paid Premium:</span>
+              <span id="displayPaidPremium">--</span>
+            </div>
+            <div class="kpi-stat-row">
+              <span>Total Claims:</span>
+              <span id="displayClaimAmount">--</span>
+            </div>
+          </div>
+
+          <!-- Real Latency Telemetry -->
+          <div class="kpi-card telemetry-card">
+            <div class="card-title-sm">Telemetry & Execution Mode</div>
+            <div class="execution-mode-pill" id="displayExecutionMode">DETERMINISTIC FALLBACK</div>
+            <div class="latency-hero" id="totalLatency">0.00s</div>
+            <div class="latency-breakdown" id="latencyBreakdown">
+              <span>Lookup: -- ms</span>
+              <span>Features: -- ms</span>
+              <span>Engine: -- ms</span>
+              <span>Synthesis: -- ms</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Underwriter Brief AI Banner -->
+        <div class="card brief-card">
+          <div class="brief-header">
+            <div class="brief-title">
+              <span class="ai-sparkle">✨</span>
+              <h3>Underwriter Brief</h3>
+              <span class="pill-verified" id="briefModelTag">gemini-3.5-flash</span>
+              <span class="pill-mode" id="briefModeTag">Mode: FALLBACK</span>
+            </div>
+            <div class="brief-confidence" id="briefConfidence">Confidence: 95%</div>
+          </div>
+          <div class="brief-body" id="briefSummary">
+            <!-- Dynamic AI summary -->
+          </div>
+          <!-- Recommended Action Banner -->
+          <div class="action-banner" id="actionBanner">
+            <div class="action-icon">📋</div>
+            <div>
+              <div class="action-label">RECOMMENDED UNDERWRITING ACTION</div>
+              <div class="action-text" id="recommendedAction">--</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Execution Trace Checklist -->
+        <div class="card trace-card">
+          <div class="card-header-styled flex-between">
+            <h3>🤖 AI Execution Trace & Verification</h3>
+            <span class="badge badge-neutral" id="traceStatusBadge">Output Schema: VALIDATED</span>
+          </div>
+          <div class="trace-checklist-grid" id="traceChecklist">
+            <div class="trace-item pass"><span>Data Loaded</span> <strong>✓</strong></div>
+            <div class="trace-item pass"><span>Features Generated</span> <strong>✓</strong></div>
+            <div class="trace-item pass"><span>Risk Calculated</span> <strong>✓</strong></div>
+            <div class="trace-item pass"><span>Evidence Extracted</span> <strong>✓</strong></div>
+            <div class="trace-item pass"><span>PII Removed</span> <strong>✓ (0 PII fields)</strong></div>
+            <div class="trace-item pass"><span>Prompt Constructed</span> <strong>✓</strong></div>
+            <div class="trace-item" id="traceApiCall"><span>Gemini API Called</span> <strong id="traceApiCallVal">--</strong></div>
+            <div class="trace-item" id="traceFallback"><span>Fallback Used</span> <strong id="traceFallbackVal">--</strong></div>
+          </div>
+          <div class="trace-telemetry-row" id="traceTelemetryDetails">
+            <span>Provider: <strong id="traceProvider">--</strong></span>
+            <span>Model: <strong id="traceModel">--</strong></span>
+            <span>Remote Roundtrip: <strong id="traceRemoteLat">N/A</strong></span>
+            <span>Local Latency: <strong id="traceLocalLat">--</strong></span>
+          </div>
+        </div>
+
+        <!-- Two Columns: Evidence vs Features & Provenance -->
+        <div class="two-col-layout">
+          <!-- Column 1: Why This Risk? -->
+          <div class="column">
+            <div class="card">
+              <div class="card-header-styled">
+                <h3>🔍 Why This Risk? (Evidence-Backed Drivers)</h3>
+              </div>
+              <div id="riskDriversList" class="drivers-list">
+                <!-- Dynamic Risk Drivers -->
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 1rem;">
+              <div class="card-header-styled">
+                <h3>✅ Strongest Positive Underwriting Factors</h3>
+              </div>
+              <ul id="positiveFactorsList" class="factors-list">
+                <!-- Dynamic Positive Factors -->
+              </ul>
+            </div>
+          </div>
+
+          <!-- Column 2: Key Indicators & Score Breakdown with Trace Risk -->
+          <div class="column">
+            <div class="card">
+              <div class="card-header-styled">
+                <h3>📊 Key Risk Indicators</h3>
+              </div>
+              <ul id="keyIndicatorsList" class="indicators-list">
+                <!-- Dynamic Indicators -->
+              </ul>
+            </div>
+
+            <div class="card" style="margin-top: 1rem;">
+              <div class="card-header-styled flex-between">
+                <h3>⚖️ Deterministic Score Decomposition</h3>
+                <button class="btn btn-sm btn-secondary" onclick="toggleProvenanceModal()">Trace Risk ➔</button>
+              </div>
+              <p class="section-subtext">Sum of individual rule contributors strictly equals total score.</p>
+              <div id="scoreContributorsList" class="contributors-list">
+                <!-- Dynamic Score Contributors -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Claim Timeline Section -->
+        <div class="card">
+          <div class="card-header-styled">
+            <h3>📅 Historical Claim Timeline</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Claim ID</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Severity (Island)</th>
+                  <th>Status</th>
+                  <th>Policy ID</th>
+                  <th>Data Integrity</th>
+                </tr>
+              </thead>
+              <tbody id="claimTimelineBody">
+                <!-- Dynamic claim rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- What-If Risk Simulator Section -->
+        <div class="card simulator-card">
+          <div class="card-header-styled flex-between">
+            <h3>🧪 What-If Risk Simulator (Interactive Demonstration)</h3>
+            <span class="badge badge-accent">Simulation only — source data unchanged</span>
+          </div>
+          <p class="section-subtext">Safely test sensitivity on deterministic underwriting score without modifying records.</p>
+          
+          <div class="sim-controls-grid">
+            <div class="sim-control">
+              <label>Recent Claims (Last 12m Delta):</label>
+              <input type="number" id="simClaimsDelta" value="0" min="-5" max="5" step="1">
+            </div>
+            <div class="sim-control">
+              <label>Loss Ratio Override:</label>
+              <input type="number" id="simLossRatio" placeholder="e.g. 1.50" min="0" max="50" step="0.2">
+            </div>
+            <div class="sim-control">
+              <label>Open / Pending Claims Override:</label>
+              <input type="number" id="simOpenClaims" placeholder="e.g. 2" min="0" max="10" step="1">
+            </div>
+            <div class="sim-control">
+              <label>Peak Claim Severity Override:</label>
+              <select id="simSeverity">
+                <option value="">Keep Original</option>
+                <option value="None">None</option>
+                <option value="Low">Low (&lt;10k)</option>
+                <option value="Medium">Medium (10k-50k)</option>
+                <option value="High">High (50k-150k)</option>
+                <option value="Critical">Critical (&gt;150k)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sim-action-row">
+            <button class="btn btn-primary btn-sm" onclick="runSimulation()">Recalculate Simulated Risk</button>
+            <button class="btn btn-secondary btn-sm" onclick="resetSimulation()">Reset Simulator</button>
+          </div>
+
+          <!-- Simulation Result Box -->
+          <div id="simResultBox" class="sim-result-box hidden">
+            <div class="sim-result-kpis">
+              <div class="sim-kpi">
+                <span>BEFORE</span>
+                <strong id="simBeforeScore">--</strong>
+              </div>
+              <div class="sim-delta-arrow">➔</div>
+              <div class="sim-kpi">
+                <span>AFTER (SIMULATED)</span>
+                <strong id="simAfterScore">--</strong>
+              </div>
+              <div class="sim-kpi">
+                <span>SCORE DELTA</span>
+                <strong id="simScoreDelta">--</strong>
+              </div>
+            </div>
+            <div class="sim-factors" id="simChangedFactors"></div>
+          </div>
+        </div>
+
+        <!-- Risk Change Detector / Horizon Notice -->
+        <div class="card">
+          <div class="card-header-styled">
+            <h3>📈 Risk Horizon & Change Trend</h3>
+          </div>
+          <div id="riskChangeDetectorContent" class="audit-narrative">
+            <p>
+              <strong>Dataset Snapshot Horizon:</strong> The authoritative dataset is evaluated against the <code>2025-10-15</code> portfolio observation snapshot.
+            </p>
+            <p id="trendSummaryText" style="margin-top: 0.5rem;">
+              Historical claim velocity trend is calculated from temporal valid records: <strong>Stable</strong>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Data Quality vs Data Relevance Separation Card -->
+        <div class="two-col-layout">
+          <!-- Data Quality -->
+          <div class="card dq-card">
+            <div class="card-header-styled">
+              <h4>⚠️ Data Quality (Integrity & Validity)</h4>
+            </div>
+            <div class="dq-stat-row">
+              <span>Flagged Temporal Records:</span>
+              <strong id="dqTemporalCount">--</strong>
+            </div>
+            <div class="dq-stat-row">
+              <span>Flagged Sum-Insured Excess:</span>
+              <strong id="dqAmountCount">--</strong>
+            </div>
+            <p id="dqSummaryText" class="dq-text" style="margin-top: 0.5rem;">--</p>
+          </div>
+
+          <!-- Data Relevance -->
+          <div class="card relevance-card">
+            <div class="card-header-styled">
+              <h4>🎯 Data Relevance (Evidence Coverage)</h4>
+            </div>
+            <div class="dq-stat-row">
+              <span>Relevance Score:</span>
+              <strong id="relScore">--%</strong>
+            </div>
+            <div class="dq-stat-row">
+              <span>Valid / Total Records:</span>
+              <strong id="relRatio">--</strong>
+            </div>
+            <p id="relImpactText" class="dq-text" style="margin-top: 0.5rem;">--</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================================================ -->
+    <!-- TAB 2: JSON EXPLORER -->
+    <!-- ============================================================ -->
+    <section id="tab-explorer" class="tab-content">
+      <div class="card">
+        <div class="flex-between" style="flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <h2>Customer JSON Explorer</h2>
+            <p class="section-subtext">Inspect fully enriched, normalized customer objects with complete feature provenance.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <select id="explorerCustomerSelect" onchange="loadCustomerJson(this.value)">
+              <option value="">Select Customer...</option>
+            </select>
+            <button class="btn btn-sm btn-secondary" onclick="copyCustomerJson()">📋 Copy JSON</button>
+          </div>
+        </div>
+
+        <div class="json-path-bar">
+          <span>JSON Path: </span>
+          <code id="currentJsonPath">data/processed/customer_profiles.json -> [customer_id]</code>
+        </div>
+
+        <pre id="jsonViewer" class="json-viewer">Select a customer above to view structured JSON...</pre>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB 3: PORTFOLIO VIEW (120) -->
+    <!-- ============================================================ -->
+    <section id="tab-portfolio" class="tab-content">
+      <div class="card">
+        <h2>Portfolio Risk Overview (120 Authoritative Profiles)</h2>
+        <p class="section-subtext">Portfolio-wide risk band distribution across all loaded accounts.</p>
+
+        <div class="portfolio-kpi-grid">
+          <div class="port-kpi low">
+            <div class="port-kpi-num" id="portLowCount">--</div>
+            <div class="port-kpi-lbl">LOW RISK ACCOUNTS</div>
+          </div>
+          <div class="port-kpi medium">
+            <div class="port-kpi-num" id="portMedCount">--</div>
+            <div class="port-kpi-lbl">MEDIUM RISK ACCOUNTS</div>
+          </div>
+          <div class="port-kpi high">
+            <div class="port-kpi-num" id="portHighCount">--</div>
+            <div class="port-kpi-lbl">HIGH RISK ACCOUNTS</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem;">
+          <div class="flex-between">
+            <h3>Top Elevated Risk Accounts</h3>
+            <input type="text" id="portfolioSearch" placeholder="Search Customer ID or City..." onkeyup="filterPortfolioTable()" class="table-search-input">
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="portfolioTable">
+              <thead>
+                <tr>
+                  <th>Customer ID</th>
+                  <th>Risk Score</th>
+                  <th>Risk Level</th>
+                  <th>Valid Claims</th>
+                  <th>Loss Ratio</th>
+                  <th>Highest Severity</th>
+                  <th>Policy Status</th>
+                  <th>Annual Premium</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="portfolioTableBody">
+                <!-- Dynamic portfolio rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB 4: DATA QUALITY & RELEVANCE AUDIT -->
+    <!-- ============================================================ -->
+    <section id="tab-dq" class="tab-content">
+      <div class="card">
+        <h2>Dataset Quality & Evidence Relevance Audit</h2>
+        <p class="section-subtext">Authoritative operational tables from <code>insurance_model.xlsx</code>.</p>
+        
+        <div class="audit-grid">
+          <div class="audit-stat-card">
+            <div class="audit-val" id="dqTotalCustomers">120</div>
+            <div class="audit-lbl">Customers</div>
+          </div>
+          <div class="audit-stat-card">
+            <div class="audit-val" id="dqTotalPolicies">140</div>
+            <div class="audit-lbl">Policies</div>
+          </div>
+          <div class="audit-stat-card">
+            <div class="audit-val" id="dqTotalClaims">220</div>
+            <div class="audit-lbl">Claims</div>
+          </div>
+          <div class="audit-stat-card highlight-warn">
+            <div class="audit-val" id="dqDateAnomalies">135</div>
+            <div class="audit-lbl">Claims Outside Policy Dates</div>
+          </div>
+          <div class="audit-stat-card highlight-warn">
+            <div class="audit-val" id="dqSumInsuredAnomalies">7</div>
+            <div class="audit-lbl">Claims Exceeding Sum Insured</div>
+          </div>
+          <div class="audit-stat-card highlight-pass">
+            <div class="audit-val">0</div>
+            <div class="audit-lbl">Missing Joins</div>
+          </div>
+        </div>
+
+        <div class="audit-narrative">
+          <h3>Data Quality vs Data Relevance Separation</h3>
+          <p>
+            <strong>Data Quality:</strong> Measures intrinsic record validity. Claims occurring outside policy boundaries or exceeding coverage sums are cataloged and segregated rather than silently deleted.
+          </p>
+          <p style="margin-top: 0.5rem;">
+            <strong>Data Relevance:</strong> Measures the volume of logically sound historical information available to support individual risk formulas. Accounts with high record integrity achieve 100% feature support.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB 5: SYNTHETIC BENCHMARK & ML CHALLENGERS -->
+    <!-- ============================================================ -->
+    <section id="tab-evaluation" class="tab-content">
+      <div class="card">
+        <div class="eval-header-row">
+          <div>
+            <h2>Actuarial Rubric Alignment Benchmark</h2>
+            <p class="section-subtext">Evaluating multi-factor deterministic risk engine agreement against independent actuarial standard and ML challenger models.</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="loadEvaluationData()">↻ Refresh Benchmark</button>
+        </div>
+
+        <div class="eval-kpi-grid">
+          <div class="eval-kpi-card highlight-metric">
+            <div class="eval-num" id="evalAccuracy">85.8%</div>
+            <div class="eval-lbl">Overall Accuracy</div>
+          </div>
+          <div class="eval-kpi-card">
+            <div class="eval-num" id="evalPrecision">87.3%</div>
+            <div class="eval-lbl">Weighted Precision</div>
+          </div>
+          <div class="eval-kpi-card">
+            <div class="eval-num" id="evalRecall">85.8%</div>
+            <div class="eval-lbl">Weighted Recall</div>
+          </div>
+          <div class="eval-kpi-card">
+            <div class="eval-num" id="evalF1">85.1%</div>
+            <div class="eval-lbl">Weighted F1 Score</div>
+          </div>
+        </div>
+
+        <!-- Empirical ML Challenger Comparison Table -->
+        <div style="margin-top: 1.5rem;">
+          <h3>Empirical Model Comparison (5-Fold Stratified Cross Validation)</h3>
+          <p class="section-subtext">Actual measured metrics across 15 features on the 120 customer portfolio:</p>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Role</th>
+                  <th>Accuracy</th>
+                  <th>Macro F1</th>
+                  <th>Weighted F1</th>
+                  <th>ROC-AUC (OvR)</th>
+                  <th>Brier Score</th>
+                  <th>Production Status</th>
+                </tr>
+              </thead>
+              <tbody id="challengerTableBody">
+                <!-- Challenger rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="disclaimer-box" style="margin-top: 1.5rem;">
+          <strong>Mandatory Benchmark Notice:</strong>
+          <p id="evalDisclaimer">
+            This is an Actuarial Rubric Alignment Benchmark and does not represent real-world insurer performance.
+            The primary insurance workbook does not contain historical underwriter decision labels;
+            ground truth is evaluated against an independent actuarial policy standard rubric.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB 6: AI GOVERNANCE -->
+    <!-- ============================================================ -->
+    <section id="tab-governance" class="tab-content">
+      <div class="card">
+        <h2>AI Governance & Responsible Underwriting Architecture</h2>
+        <p class="section-subtext">Compliance, transparency, and guardrail verification checklist.</p>
+
+        <div class="governance-grid">
+          <div class="gov-card">
+            <div class="gov-icon">🔒</div>
+            <h4>PII Redaction</h4>
+            <p>FirstName, LastName, and DOB are stripped during ingestion. Age bands are derived before DOB removal.</p>
+          </div>
+          <div class="gov-card">
+            <div class="gov-icon">⚖️</div>
+            <h4>Authoritative Score</h4>
+            <p>The deterministic engine is the sole source of truth for numeric scoring (0-100). GenAI cannot modify scores.</p>
+          </div>
+          <div class="gov-card">
+            <div class="gov-icon">🔍</div>
+            <h4>Evidence Traceability</h4>
+            <p>Every risk driver is linked to verifiable historical claim and payment records. Hallucinations are barred.</p>
+          </div>
+          <div class="gov-card">
+            <div class="gov-icon">👤</div>
+            <h4>Human Oversight</h4>
+            <p>All AI outputs are framed as decision-support guidance for human underwriters. Autonomous binding is disallowed.</p>
+          </div>
+          <div class="gov-card">
+            <div class="gov-icon">🔄</div>
+            <h4>Zero-Failure Fallback</h4>
+            <p>If remote GenAI credentials are unavailable or offline, the verified deterministic synthesis engine activates.</p>
+          </div>
+          <div class="gov-card">
+            <div class="gov-icon">🛡️</div>
+            <h4>Prompt Injection Defense</h4>
+            <p>Customer data is treated as untrusted data. Input fields are sanitized to prevent directive overrides.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TRACE RISK PROVENANCE MODAL -->
+    <!-- ============================================================ -->
+    <div id="provenanceModal" class="modal hidden">
+      <div class="modal-content card">
+        <div class="flex-between">
+          <h2>Risk Score Provenance ("Trace Risk")</h2>
+          <button class="btn-text" onclick="toggleProvenanceModal()">✕ Close</button>
+        </div>
+        <p class="section-subtext">Tracing each score contributor from final risk points back to source files and records.</p>
+        
+        <div class="table-responsive" style="margin-top: 1rem;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Risk Factor</th>
+                <th>Points Added</th>
+                <th>Feature Name</th>
+                <th>Supporting Evidence</th>
+                <th>Source Records</th>
+                <th>JSON Path</th>
+                <th>Source Code Module</th>
+              </tr>
+            </thead>
+            <tbody id="provenanceTableBody">
+              <!-- Dynamic provenance rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- FINAL UI SECTION: WHAT OMNIRISK DOES -->
+    <!-- ============================================================ -->
+    <section class="card pipeline-card" style="margin-top: 2rem;">
+      <h2 style="text-align: center; margin-bottom: 0.5rem;">WHAT OMNIRISK DOES</h2>
+      <p style="text-align: center; color: var(--text-secondary); max-width: 800px; margin: 0 auto 1.5rem auto; font-size: 0.95rem;">
+        OmniRisk converts fragmented insurance records into an explainable, evidence-backed risk profile.
+        The deterministic engine owns the risk score; Gemini converts verified evidence into an underwriter-ready summary.
+      </p>
+
+      <div class="pipeline-diagram">
+        <div class="pipe-step">
+          <div class="pipe-num">1</div>
+          <div class="pipe-title">Fragmented Data</div>
+          <div class="pipe-desc">Customers, Policies, Claims, Payments</div>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <div class="pipe-num">2</div>
+          <div class="pipe-title">Data Quality & Privacy</div>
+          <div class="pipe-desc">PII Stripped, Anomalies Flagged</div>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <div class="pipe-num">3</div>
+          <div class="pipe-title">Feature Engine</div>
+          <div class="pipe-desc">Loss Ratios, Frequencies, Severity</div>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <div class="pipe-num">4</div>
+          <div class="pipe-title">Deterministic Engine</div>
+          <div class="pipe-desc">Bounded Score (0-100)</div>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <div class="pipe-num">5</div>
+          <div class="pipe-title">Evidence Engine</div>
+          <div class="pipe-desc">Grounded Drivers & Positive Factors</div>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <div class="pipe-num">6</div>
+          <div class="pipe-title">Customer JSON</div>
+          <div class="pipe-desc">Structured Anonymized Contract</div>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step highlight-pipe">
+          <div class="pipe-num">7</div>
+          <div class="pipe-title">Gemini 3.5 Flash</div>
+          <div class="pipe-desc">Synthesis Layer (or Fallback)</div>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <div class="pipe-num">8</div>
+          <div class="pipe-title">Underwriter Brief</div>
+          <div class="pipe-desc">Executive Actionable Summary</div>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step human-pipe">
+          <div class="pipe-num">9</div>
+          <div class="pipe-title">Human Decision</div>
+          <div class="pipe-desc">Underwriter Review & Approval</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>OmniRisk v2.0.0 · TCS Technology Day Challenge</span>
+      <span>Gemini 3.5 Flash · Deterministic Rule Engine · Single-Agent Architecture</span>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

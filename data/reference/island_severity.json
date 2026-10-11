@@ -1,0 +1,32 @@
+{
+  "taxonomies": [
+    {
+      "severity_id": "Low",
+      "severity_order": 1,
+      "min_amount": 0,
+      "max_amount": 10000,
+      "description": "Claim <10k"
+    },
+    {
+      "severity_id": "Medium",
+      "severity_order": 2,
+      "min_amount": 10000,
+      "max_amount": 50000,
+      "description": "10k-50k"
+    },
+    {
+      "severity_id": "High",
+      "severity_order": 3,
+      "min_amount": 50000,
+      "max_amount": 150000,
+      "description": "50k-150k"
+    },
+    {
+      "severity_id": "Critical",
+      "severity_order": 4,
+      "min_amount": 150000,
+      "max_amount": null,
+      "description": ">150k"
+    }
+  ]
+}
